@@ -82,7 +82,7 @@ body {
     border-radius: 10px;
   }
   
-  .form label .input + span {
+  span {
     position: absolute;
     left: 10px;
     top: 15px;
@@ -92,10 +92,7 @@ body {
     transition: 0.3s ease;
   }
   
-  .form label .input:placeholder-shown + span {
-    top: 15px;
-    font-size: 0.9em;
-  }
+
   
   .form label .input:focus + span,.form label .input:valid + span {
     top: 30px;
@@ -103,10 +100,11 @@ body {
     font-weight: 600;
   }
   
-  .form label .input:valid + span {
+  .valid {
     color: green;
   }
-  
+
+
 
   
   @keyframes pulse {

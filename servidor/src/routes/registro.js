@@ -1,14 +1,11 @@
 import express from 'express';
 import pool from '../database/config.js';
-import bcrypt from 'bcryptjs';
+import {isValidEmail, hashPass} from '../validations/validations.js'
 
 const router = express.Router();
 
 const MIN_LENGTH = 1;
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+
 
 router.get("/registro", async (req, res) => {
   res.send('Hola')
@@ -23,12 +20,11 @@ router.post("/registro", async (req, res) => {
         } else if (!isValidEmail(correo)) {
             return res.status(400).send('Formato de correo electrónico inválido');
         } else {
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(pass, salt);
+            const hash = hashPass(pass)
             const sql = 'INSERT INTO usuarios(name, lastname, email, pass) VALUES($1, $2, $3, $4) returning *';
             const values = [nombre, apellido, correo, hash];
             const usuario = await pool.query(sql, values);
-            return res.json(usuario.rows[0]);
+            return res.status(200).json(usuario.rows[0]);
         }
     } catch (error) {
         console.error(error);

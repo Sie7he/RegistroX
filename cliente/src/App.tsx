@@ -30,6 +30,24 @@ function App() {
     }
   };
 
+  const validPass = () => {
+   if(pw.length === 0) {
+    return 'text-gray-500'
+   } else if ( pw.length > 0 && users.pass === pw) {
+    return 'text-green-700'
+   } else {
+    return 'text-red-700'
+   }
+
+  }
+
+  const isNotEmpty = (value) => {
+
+    if (value.length > 0) return true
+    return false
+
+  }
+
   return (
     <main className="flex justify-center items-center h-screen bg-slate-400">
       <div className="-rotate-6 bg-gradient-to-r from-sky-400 to-blue-500 rounded-xl shadow-md h-96 w-96 relative "></div>
@@ -45,11 +63,11 @@ function App() {
           type={"text"}
           value={users.nombre}
           onChange={(e) => handleChange(e, "nombre")}
-          className="input"
+          className= {`input` }
           required
 
         />
-        <span>Nombre</span>
+        <span className={`${isNotEmpty(users.nombre) ? 'text-green-700' : ''}`}>Nombre</span>
         </label>
         <label>
         <input
@@ -59,13 +77,13 @@ function App() {
           className="input"
           required
         />
-        <span>Apellido</span>
+        <span className={`${isNotEmpty(users.apellido) ? 'text-green-700' : ''}`}>Apellido</span>
         </label>
         </div>
        
         <label>
         <input
-          type={"text"}
+          type={"email"}
           value={users.correo}
           onChange={(e) => handleChange(e, "correo")}
           className="input"
@@ -92,7 +110,7 @@ function App() {
           className="input"
           required
         />
-        <span>Repetir Contraseña</span>
+        <span className={validPass()}>Repetir Contraseña</span>
     </label>
         <input
           type="submit"

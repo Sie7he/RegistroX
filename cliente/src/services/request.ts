@@ -1,8 +1,8 @@
 import { User } from '../types/user'
 
-export async function insertarUsuario(usuario: User) : Promise<any> {
+export async function insertarUsuario(usuario: User) : Promise<JSON> {
     try {
-        const response = await fetch('http://localhost:3000/registro/', {
+        const response = await fetch('https://service-x-j7eg.onrender.com/registro', {
             method: 'POST',
             body: JSON.stringify(usuario),
             headers: {
@@ -13,6 +13,6 @@ export async function insertarUsuario(usuario: User) : Promise<any> {
         const usuarioCreado = await response.json()
         return usuarioCreado;
     } catch (error) {
-        console.log(error)
+        throw new Error('Error: ' + error)
     }
 }
