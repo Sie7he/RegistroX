@@ -1,6 +1,6 @@
 export interface User {
-    name : string,
-    lastName : string,
-    email : string,
+    nombre : string,
+    apellido : string,
+    correo : string,
     pass : string
 }

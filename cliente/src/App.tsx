@@ -1,62 +1,107 @@
-import { ChangeEvent, useState, FormEvent } from 'react'
-
-import './App.css'
+import { ChangeEvent, useState, FormEvent } from "react";
+import { insertarUsuario } from './services/request';
+import { User } from './types/user'
+import "./App.css";
 
 function App() {
 
-   interface User {
-    name : string,
-    lastName : string,
-    email : string,
-    pass : string
-}
 
   const [users, setUsers] = useState<User>({
-    name : '',
-    lastName: '',
-    email: '',
-    pass: ''
-
+    nombre: "",
+    apellido: "",
+    correo: "",
+    pass: "",
   });
 
-  const [pw, setPw] = useState('')
+  const [pw, setPw] = useState("");
 
-  const handleChange = (event : ChangeEvent, prop : string) => {
-    const value = (event.target as HTMLInputElement).value
-    setUsers(prevState => ({...prevState, [prop] : value}))
-  }
+  const handleChange = (event: ChangeEvent, prop: string) => {
+    const value = (event.target as HTMLInputElement).value;
+    setUsers((prevState) => ({ ...prevState, [prop]: value }));
+  };
 
-  const handleSubmit = (e : FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if ( pw !== users.pass) {
-      alert('Las contraseñas no coinciden')
+    if (pw !== users.pass) {
+      alert("Las contraseñas no coinciden");
     } else {
-      console.log(users)
+      const usuario = await insertarUsuario(users)
+      console.log(usuario)
     }
-
-  }
-
+  };
 
   return (
-    <main className='flex justify-center items-center h-screen bg-slate-400'>
-      <div className='-rotate-6 bg-gradient-to-r from-sky-400 to-blue-500 rounded-xl shadow-md h-96 w-96 relative '>
-     
-     </div>
-      <form onSubmit={(e) => handleSubmit(e)} className='absolute h-96 w-96 rounded-xl shadow-md bg-white grid gap-4 p-4'>
-        <h1 className='title'>Registro X </h1>
-      <input type={'text'} value={users.name} onChange={e => handleChange(e, 'name')} className='input' placeholder='Nombre'/>
-      <input type={'text'} value={users.lastName} onChange={e => handleChange(e, 'lastName')} className='input' placeholder='Apellido'/>
-      <input type={'text'} value={users.email} onChange={e => handleChange(e, 'email')} className='input' placeholder='Correo'/>
-      <input type={'password'} value={users.pass} onChange={e => handleChange(e, 'pass')} className='input' placeholder='Contraseña'/>
-      <input type={'password'} value={pw} onChange={e => setPw(e.target.value)} className='input' placeholder='Repetir Contraseña'/>
-      {/* <input type={'password'} value={user.pass} onChange={e => handleChange(e, '')}/> */}
- 
-      <input type='submit' value='Registrarse' className='p-4 bg-blue-500 text-white'/>
- 
-    </form>
-    </main>
-  )
+    <main className="flex justify-center items-center h-screen bg-slate-400">
+      <div className="-rotate-6 bg-gradient-to-r from-sky-400 to-blue-500 rounded-xl shadow-md h-96 w-96 relative "></div>
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="form "
+      >
+        <h1 className="title">Registro X </h1>
+        <div className="flex gap-2">
+        <label>
+        <input
+          id = {'nombre'}
+          type={"text"}
+          value={users.nombre}
+          onChange={(e) => handleChange(e, "nombre")}
+          className="input"
+          required
 
+        />
+        <span>Nombre</span>
+        </label>
+        <label>
+        <input
+          type={"text"}
+          value={users.apellido}
+          onChange={(e) => handleChange(e, "apellido")}
+          className="input"
+          required
+        />
+        <span>Apellido</span>
+        </label>
+        </div>
+       
+        <label>
+        <input
+          type={"text"}
+          value={users.correo}
+          onChange={(e) => handleChange(e, "correo")}
+          className="input"
+          required
+        />
+        <span>Correo</span>
+        </label>
+       <label>
+       <input
+          type={"password"}
+          value={users.pass}
+          onChange={(e) => handleChange(e, "pass")}
+          className="input"
+          required
+        />
+        <span>Contraseña</span>
+       </label>
+        
+    <label>
+    <input
+          type={"password"}
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+          className="input"
+          required
+        />
+        <span>Repetir Contraseña</span>
+    </label>
+        <input
+          type="submit"
+          value="Registrarse"
+          className="bg-blue-400 hover:bg-blue-500 text-white p-4 cursor-pointer delay-75"
+        />
+      </form>
+    </main>
+  );
 }
 
-export default App
+export default App;
