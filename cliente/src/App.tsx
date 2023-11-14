@@ -1,122 +1,102 @@
 import { ChangeEvent, useState, FormEvent } from "react";
-import { insertarUsuario } from './services/request';
-import { User } from './types/user'
+import { insertarUsuario } from "./services/request";
+import { FormInput } from './components/FormInput';
+import { User, Input } from "./types/user";
 import "./App.css";
 
 function App() {
-
-
   const [users, setUsers] = useState<User>({
     nombre: "",
     apellido: "",
     correo: "",
     pass: "",
+    confirmPass : ""
   });
 
-  const [pw, setPw] = useState("");
+  const inputs : Input[] = [{
+    id: 1,
+    name: 'nombre',
+    type: 'text',
+    placeholder: 'Nombre',
+    label: 'Nombre',
+    errorMsg: 'El nombre debe tener entre 2-20 carácteres y no debe tener números',
+    pattern : "^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ']{2,20}$",
+    required : true
 
-  const handleChange = (event: ChangeEvent, prop: string) => {
+  },
+  {
+    id: 2,
+    name: 'apellido',
+    type: 'text',
+    placeholder: 'Apellido',
+    label: 'Apellido',
+    errorMsg: 'El apellido debe tener entre 2-20 carácteres y no debe tener números',
+    pattern : "^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ']{2,20}$",
+    required : true
+
+  },
+  {
+    id: 3,
+    name: 'correo',
+    type: 'email',
+    placeholder: 'Correo',
+    label: 'Correo',
+    errorMsg: 'El formato de correo no es válido',
+    required : true
+
+  },
+  {
+    id: 4,
+    name: 'pass',
+    type: 'password',
+    placeholder: 'Contraseña',
+    label: 'Contraseña',
+    errorMsg: 'La contraseña debe tener entre 8-20 carácteres y tener al menos una letra, un número y un carácter especial',
+    pattern : `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*\\/])[ -~]{8,20}$`,
+    required : true
+
+  },
+  {
+    id: 5,
+    name: 'confirmPass',
+    type: 'password',
+    placeholder: 'Confirmar Contraseña',
+    label: 'Confirmar Contraseña',
+    errorMsg: 'Las contraseñas no coinciden',
+    pattern : users.pass,
+    required : true
+
+  },
+
+]
+
+
+
+  const onChange = (event: ChangeEvent) => {
     const value = (event.target as HTMLInputElement).value;
-    setUsers((prevState) => ({ ...prevState, [prop]: value }));
-  };
+    const name = (event.target as HTMLInputElement).name
+    setUsers({ ...users, [name]: value }); 
+   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (pw !== users.pass) {
-      alert("Las contraseñas no coinciden");
-    } else {
-      const usuario = await insertarUsuario(users)
-      console.log(usuario)
-    }
+    console.log(users)
+   
   };
-
-  const validPass = () => {
-   if(pw.length === 0) {
-    return 'text-gray-500'
-   } else if ( pw.length > 0 && users.pass === pw) {
-    return 'text-green-700'
-   } else {
-    return 'text-red-700'
-   }
-
-  }
-
-  const isNotEmpty = (value) => {
-
-    if (value.length > 0) return true
-    return false
-
-  }
 
   return (
     <main className="flex justify-center items-center h-screen bg-slate-400">
-      <div className="-rotate-6 bg-gradient-to-r from-sky-400 to-blue-500 rounded-xl shadow-md h-96 w-96 relative "></div>
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="form "
-      >
+      <form onSubmit={(e) => handleSubmit(e)} className="form ">
         <h1 className="title">Registro X </h1>
-        <div className="flex gap-2">
-        <label>
-        <input
-          id = {'nombre'}
-          type={"text"}
-          value={users.nombre}
-          onChange={(e) => handleChange(e, "nombre")}
-          className= {`input` }
-          required
-
+       {inputs.map(input => (
+        <FormInput 
+          key={input.id}
+          {...input}
+          value={users[input.name]}
+          onChange={onChange}
         />
-        <span className={`${isNotEmpty(users.nombre) ? 'text-green-700' : ''}`}>Nombre</span>
-        </label>
-        <label>
-        <input
-          type={"text"}
-          value={users.apellido}
-          onChange={(e) => handleChange(e, "apellido")}
-          className="input"
-          required
-        />
-        <span className={`${isNotEmpty(users.apellido) ? 'text-green-700' : ''}`}>Apellido</span>
-        </label>
-        </div>
-       
-        <label>
-        <input
-          type={"email"}
-          value={users.correo}
-          onChange={(e) => handleChange(e, "correo")}
-          className="input"
-          required
-        />
-        <span>Correo</span>
-        </label>
-       <label>
-       <input
-          type={"password"}
-          value={users.pass}
-          onChange={(e) => handleChange(e, "pass")}
-          className="input"
-          required
-        />
-        <span>Contraseña</span>
-       </label>
-        
-    <label>
-    <input
-          type={"password"}
-          value={pw}
-          onChange={(e) => setPw(e.target.value)}
-          className="input"
-          required
-        />
-        <span className={validPass()}>Repetir Contraseña</span>
-    </label>
-        <input
-          type="submit"
-          value="Registrarse"
-          className="bg-blue-400 hover:bg-blue-500 text-white p-4 cursor-pointer delay-75"
-        />
+       ))}
+      <input type="submit" value='Registrarse' className="bg-sky-400 text-white p-4 rounded cursor-pointer hover:bg-sky-500" />
       </form>
     </main>
   );
