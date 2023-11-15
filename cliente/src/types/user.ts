@@ -24,4 +24,5 @@ export interface FormInputProps {
     errorMsg: string;
     name: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    value : string | undefined;
   }
