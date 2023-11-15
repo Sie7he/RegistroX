@@ -79,8 +79,12 @@ function App() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+   try {
     await insertarUsuario(users)
-    console.log(users)
+    alert('Registro Exitoso')
+   } catch (error) {
+    console.log(error)
+   }
    
   };
 

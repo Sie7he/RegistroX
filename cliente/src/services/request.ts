@@ -2,7 +2,7 @@ import { User } from '../types/user'
 
 export async function insertarUsuario(usuario: User) : Promise<JSON> {
     try {
-        console.log(import.meta.env.SERVER)
+        console.log(usuario)
         const response = await fetch(import.meta.env.VITE_SERVER, {
             method: 'POST',
             body: JSON.stringify(usuario),
