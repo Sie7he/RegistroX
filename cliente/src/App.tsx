@@ -71,7 +71,6 @@ function App() {
 ]
 
 
-
   const onChange = (event: ChangeEvent) => {
     const value = (event.target as HTMLInputElement).value;
     const name = (event.target as HTMLInputElement).name
@@ -80,6 +79,7 @@ function App() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    await insertarUsuario(users)
     console.log(users)
    
   };

@@ -2,7 +2,8 @@ import { User } from '../types/user'
 
 export async function insertarUsuario(usuario: User) : Promise<JSON> {
     try {
-        const response = await fetch('https://service-x-j7eg.onrender.com/registro', {
+        console.log(import.meta.env.SERVER)
+        const response = await fetch(import.meta.env.VITE_SERVER, {
             method: 'POST',
             body: JSON.stringify(usuario),
             headers: {

@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface User {
     nombre : string,
     apellido : string,
@@ -17,3 +19,9 @@ export interface Input {
     pattern? : string,
     required : boolean
 }
+export interface FormInputProps {
+    label: string;
+    errorMsg: string;
+    name: string;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  }
