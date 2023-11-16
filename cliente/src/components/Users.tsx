@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import {obtenerUsuarios} from '../services/request'
 import { useState } from 'react';
 import { User } from '../types/user';
