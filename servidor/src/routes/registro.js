@@ -8,7 +8,15 @@ const MIN_LENGTH = 1;
 
 
 router.get("/registro", async (req, res) => {
-  res.send('Hola')
+    try {
+        const sql = 'SELECT * FROM usuarios'
+        const usuarios = await pool.query(sql);
+        return res.status(200).json(usuarios.rows)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Error interno del servidor');
+
+    }
 });
 
 router.post("/registro", async (req, res) => {

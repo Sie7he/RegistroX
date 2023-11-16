@@ -13,8 +13,9 @@ main::before {
   inset: 0;
   height: 100%;
   width: 100%;
-  background-image: url('https://wallpapers.com/images/hd/sea-background-vakcslo61q7mhgti.jpg');
+  background-image: url('https://playasdominicana.com/wp-content/uploads/2023/08/playas-caribenas-de-ensueno.jpg');
   opacity: .7;
+  background-size: cover;
 }
 .form {
     display: flex;
