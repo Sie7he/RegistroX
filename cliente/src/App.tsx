@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, FormEvent } from "react";
 import { insertarUsuario } from "./services/request";
+import { useNavigate } from "react-router-dom";
 import { FormInput } from "./components/FormInput";
 import { User, Input } from "./types/user";
 import "./App.css";
@@ -13,6 +14,8 @@ function App() {
     pass: "",
     confirmPass: "",
   });
+
+ const navigate = useNavigate()
 
   // Definición de inputs para el formulario
   const inputs: Input[] = [
@@ -82,7 +85,7 @@ function App() {
     e.preventDefault();
     try {
       await insertarUsuario(users);
-      alert("Registro Exitoso");
+      navigate('/usuarios')
     } catch (error) {
       console.log(error);
     }

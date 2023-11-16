@@ -1,8 +1,7 @@
 import { User } from '../types/user'
 
 
-
-export async function obtenerUsuarios() : Promise<JSON> {
+export async function obtenerUsuarios() : Promise<User[]> {
     try {
         const response = await fetch(import.meta.env.VITE_SERVER)
         const data = await response.json()

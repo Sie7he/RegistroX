@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import {obtenerUsuarios} from '../services/request'
 import { useState } from 'react';
+import { User } from '../types/user';
 
 
 
-export const Users = () => {
-
-    const [users, setUsers] = useState([])
+const useUsuarios = () => {
+    const [users, setUsers] = useState<User[]>([])
 
     useEffect(() => {
         async function getUsers () {
@@ -16,9 +16,15 @@ export const Users = () => {
         getUsers()
     }, [])
     
+    return users
+}
 
-  return (
-    <table>
+export const Users = () => {
+
+    const users = useUsuarios();
+
+  return ( 
+    <table className='text-center w-full' >
         <thead>
             <tr>
                 <th>Nombre</th>
