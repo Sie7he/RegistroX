@@ -24,20 +24,20 @@ export const Users = () => {
     const users = useUsuarios();
 
   return ( 
-    <table className='text-center w-full' >
-        <thead>
+    <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400' >
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo</th>
+                <th className='px-6 py-3'>Nombre</th>
+                <th className='px-6 py-3'>Apellido</th>
+                <th className='px-6 py-3'>Correo</th>
             </tr>
         </thead>
         <tbody>
             {users.map((user => (
-                <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.lastname}</td>
-                    <td>{user.email}</td>
+                <tr key={user.id} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                    <td className='px-6 py-3'>{user.name}</td>
+                    <td className='px-6 py-3'>{user.lastname}</td>
+                    <td className='px-6 py-3'>{user.email}</td>
                 </tr>
             )))}
 
