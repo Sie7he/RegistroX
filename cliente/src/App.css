@@ -5,7 +5,16 @@ body {
 }
 
 main {
+  position: relative;
+}
+main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
   background-image: url('https://wallpapers.com/images/hd/sea-background-vakcslo61q7mhgti.jpg');
+  opacity: .7;
 }
 .form {
     display: flex;
@@ -16,6 +25,7 @@ main {
     padding: 20px;
     border-radius: 20px;
     position: relative;
+    opacity: 1;
   }
   
   .title {

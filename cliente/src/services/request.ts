@@ -2,7 +2,6 @@ import { User } from '../types/user'
 
 export async function insertarUsuario(usuario: User) : Promise<JSON> {
     try {
-        console.log(usuario)
         const response = await fetch(import.meta.env.VITE_SERVER, {
             method: 'POST',
             body: JSON.stringify(usuario),
@@ -14,6 +13,6 @@ export async function insertarUsuario(usuario: User) : Promise<JSON> {
         const usuarioCreado = await response.json()
         return usuarioCreado;
     } catch (error) {
-        throw new Error('Error: ' + error)
+        throw new Error('Ha ocurrido un error en el servidor')
     }
 }
